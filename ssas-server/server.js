@@ -16,7 +16,8 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(helmet.permittedCrossDomainPolicies({ permittedPolicies: "all" }));
 
-server.use("/api/library", require("./api/library"));
+server.use("/api/library", require("./api/library.api"));
+server.use("/api/user", require("./api/user.api"));
 
 server.get("/", (req, res) => {
 	return res.json({
@@ -33,7 +34,7 @@ server.listen(config.server.port, () => {
 		{
 			useNewUrlParser : true,
 			useUnifiedTopology: true,
-			socketTimeoutMS : 0,
+			socketTimeoutMS : 10000,
 			keepAlive : true
 		}
 	);

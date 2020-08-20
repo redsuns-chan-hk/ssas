@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() : void {
-    this.http.get("http://127.0.0.1:8787/library/find/all").toPromise().then((response: SsasResponse) => {
+    this.http.get("http://127.0.0.1:8787/api/library/find/all").toPromise().then((response: SsasResponse) => {
       this.response = JSON.stringify(response.message);
     });
   }
