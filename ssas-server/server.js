@@ -1,11 +1,12 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const config = require("./config");
 
 const database = require("./src/database/ssas-database");
-const { Library } = require("./model/Library.model");
+const Library = require("./model/Library.model");
 
 const server = express();
 
@@ -15,37 +16,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(helmet.permittedCrossDomainPolicies({ permittedPolicies: "all" }));
 
-server.get("/library/add", (req, res) => {
-	console.log("START library add");
-	let newLibrary = new Library({
-		shortName: "PSTSWPL",
-		fullName: "Ping Shan Tin Shui Wai Public Library",
-		address: "Tin Shui Wai West Rail Station"
-	});
-	try {
-		newLibrary.save((err) => {
-			if (!err) {
-				console.log("Library Saved!");
-				return res.json({
-					success: true,
-					message: "Saved!"
-				});
-			} else {
-				console.error(err);
-				return res.json({
-					success: false,
-					message: "Unable to save"
-				});
-			}
-		});
-	} catch (err) {
-		console.error(err);
-		return res.json({
-			success: false,
-			message: "Save Exception"
-		});
-	}
-});
+server.use("/api/library", require("./api/library"));
 
 server.get("/", (req, res) => {
 	return res.json({

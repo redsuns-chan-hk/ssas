@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { SsasResponse } from 'src/model/base/SsasResponse.model';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,8 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() : void {
-    this.http.get("http://127.0.0.1:8787").toPromise().then((response: any) => {
-      this.response = response.message;
+    this.http.get("http://127.0.0.1:8787/library/find/all").toPromise().then((response: SsasResponse) => {
+      this.response = JSON.stringify(response.message);
     });
   }
 
