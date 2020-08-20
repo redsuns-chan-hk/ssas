@@ -1,6 +1,6 @@
 
 export class SsasResponse {
-  public status: string;
+  public success: boolean;
   public message: string;
-  public object: string;
+  public data: any;
 }
