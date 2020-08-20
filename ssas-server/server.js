@@ -2,12 +2,12 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 
+const config = require("./config");
+
 const database = require("./src/database/ssas-database");
 const { Library } = require("./model/Library.model");
 
 const server = express();
-
-const SERVER_PORT = 8787;
 
 server.use(cors());
 server.use(helmet());
@@ -54,11 +54,11 @@ server.get("/", (req, res) => {
 	});
 });
 
-server.listen(SERVER_PORT, () => {
-	console.log("Server started at port " + SERVER_PORT);
+server.listen(config.server.port, () => {
+	console.log("Server started at port " + config.server.port);
 	database.connect(
-		"127.0.0.1", 27017, "ssas",
-		null, null,
+		config.database.host, config.database.port, config.database.name,
+		config.database.user, config.database.password,
 		{
 			useNewUrlParser : true,
 			useUnifiedTopology: true,
